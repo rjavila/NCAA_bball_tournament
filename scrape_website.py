@@ -1,5 +1,6 @@
 import requests
 import getpass
+import os
 from astropy.table import Table
 
 #This is where the html files for each user are going to be 
@@ -7,6 +8,8 @@ from astropy.table import Table
 tab = Table.read('user_urls.txt',format='ascii.basic')
 outpath = 'raw_html_files/'
 
+if not os.path.exists(outpath):
+    os.mkdir(outpath)
 
 #This is the stuff for loggin in to the CBS website
 loginurl = 'https://www.cbssports.com/login'
@@ -17,7 +20,7 @@ values = {'userid':input('login: '),
 
 mysesh = requests.Session()
 
-print('Logging in')
+print('Logging in to {}'.format(loginurl))
 r = mysesh.post(loginurl,data=values)
 
 #Here's where we're gonna loop through each player and scrape the
