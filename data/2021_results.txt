@@ -21,3 +21,10 @@ Kansas
 LSU
 Michigan
 Creighton
+Alabama
+USC
+Oregon
+Iowa
+Maryland
+Ohio
+Oklahoma
