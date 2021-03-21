@@ -59,29 +59,34 @@ def main(rnd):
                     'comment':'#'}
 
     players = pd.read_csv(f'data/{year}_spreadsheet_rd1.csv',**readcsv_opts)
+    players = players.T
 
     #Here we do further rounds when necessary.
     if rnd >= 2:
-        players.append(pd.read_csv(f'data/{year}_spreadsheet_rd2.csv',**readcsv_opts))
-        all_points.append(get_rd2_point(results,seeds))
+        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd2.csv',
+                                 **readcsv_opts).T)
+        all_points = all_points.append(get_rd2_points(results,seeds))
 
     if rnd >= 3:
-        players.append(pd.read_csv(f'data/{year}_spreadsheet_rd3.csv',**readcsv_opts))
-        all_points.append(get_rd3_point(results,seeds))
+        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd3.csv',
+                                 **readcsv_opts).T)
+        all_points = all_points.append(get_rd3_points(results,seeds))
 
     if rnd >= 4:
-        players.append(pd.read_csv(f'data/{year}_spreadsheet_rd4.csv',**readcsv_opts))
-        all_points.append(get_rd4_point(results,seeds))
+        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd4.csv',
+                                 **readcsv_opts).T)
+        all_points = all_points.append(get_rd4_points(results,seeds))
 
     if rnd >= 5:
-        players.append(pd.read_csv(f'data/{year}_spreadsheet_rd5.csv',**readcsv_opts))
-        all_points.append(get_rd5_point(results,seeds))
+        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd5.csv',
+                                 **readcsv_opts).T)
+        all_points = all_points.append(get_rd5_points(results,seeds))
 
     if rnd >= 6:
-        players.append(pd.read_csv(f'data/{year}_spreadsheet_rd6.csv',**readcsv_opts))
-        all_points.append(get_rd6_point(results,seeds))
+        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd6.csv',
+                                 **readcsv_opts).T)
+        all_points = all_points.append(get_rd6_points(results,seeds))
 
-    players = players.T
 
     #We now have all the data we need. 
     #Settng up plot.
@@ -105,10 +110,11 @@ def main(rnd):
     
     #Finishing up plot.
     ax.set_xticks(xaxis)
-    ax.set_xticklabels(xaxis)
+    ax.set_xticklabels(xaxis,size='small')
     ax.set_xlabel('Game number',fontsize='large')
     ax.set_ylabel('Points won',fontsize='large')
-    ax.set_title(f'After {results.Winner.to_list()[-1]} win',fontsize='large')
+    ax.set_title(f'After {results.Winner.to_list()[-1]} win',
+                 fontsize='large')
     plt.legend()
     plt.tight_layout()
 
