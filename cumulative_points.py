@@ -53,7 +53,7 @@ def main(rnd):
     colnames = ['Player']
     colnames = colnames + list(range(1,33))
 
-    readcsv_opts = {'skiprows':5,
+    readcsv_opts = {'skiprows':4,
                     'names':colnames,
                     'index_col':'Player',
                     'comment':'#'}
@@ -87,6 +87,7 @@ def main(rnd):
                                  **readcsv_opts).T)
         all_points = all_points.append(get_rd6_points(results,seeds))
 
+    players.reset_index(drop=True,inplace=True)
 
     #We now have all the data we need. 
     #Settng up plot.
@@ -110,7 +111,7 @@ def main(rnd):
     
     #Finishing up plot.
     ax.set_xticks(xaxis)
-    ax.set_xticklabels(xaxis,size='small')
+    ax.set_xticklabels(xaxis,size='x-small')
     ax.set_xlabel('Game number',fontsize='large')
     ax.set_ylabel('Points won',fontsize='large')
     ax.set_title(f'After {results.Winner.to_list()[-1]} win',
@@ -120,8 +121,10 @@ def main(rnd):
 
     plt.savefig('2021_cumulative.png',dpi=300)
 
+    return players
+
 
 if __name__ == '__main__':
 
     rnd = int(sys.argv[1])
-    main(rnd)
+    tab = main(rnd)
