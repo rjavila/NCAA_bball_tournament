@@ -37,6 +37,19 @@ def get_rd2_points(results,seeds):
 
     return rd2_pts
 
+def get_rd3_points(results,seeds):
+
+    rd3_const = 8
+    
+    if results.size <= 48:
+        rd3_pts = rd3_const+seeds.loc[results.Winner.values][48:]
+
+    else:
+        rd3_pts = rd3_const+seeds.loc[results.Winner.values][48:56]
+
+    return rd3_pts
+
+
 def main(rnd):
 
     #Reading in some static data to figure out points. 
@@ -54,22 +67,26 @@ def main(rnd):
     colnames = colnames + list(range(1,33))
 
     readcsv_opts = {'skiprows':4,
-                    'names':colnames,
                     'index_col':'Player',
                     'comment':'#'}
 
-    players = pd.read_csv(f'data/{year}_spreadsheet_rd1.csv',**readcsv_opts)
+    players = pd.read_csv(f'data/{year}_spreadsheet_rd1.csv',names=colnames,
+                          **readcsv_opts)
     players = players.T
 
     #Here we do further rounds when necessary.
     if rnd >= 2:
+        colnames = ['Player']
+        colnames = colnames + list(range(32,48))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd2.csv',
-                                 **readcsv_opts).T)
+                                 names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd2_points(results,seeds))
 
     if rnd >= 3:
+        colnames = ['Player']
+        colnames = colnames + list(range(48,56))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd3.csv',
-                                 **readcsv_opts).T)
+                                 names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd3_points(results,seeds))
 
     if rnd >= 4:
@@ -88,6 +105,7 @@ def main(rnd):
         all_points = all_points.append(get_rd6_points(results,seeds))
 
     players.reset_index(drop=True,inplace=True)
+    players = players.apply(lambda x: x.str.rstrip(' ][1234567890'))
 
     #We now have all the data we need. 
     #Settng up plot.
@@ -111,11 +129,16 @@ def main(rnd):
     
     #Finishing up plot.
     ax.set_xticks(xaxis)
-    ax.set_xticklabels(xaxis,size='x-small')
+    ax.set_xticklabels(xaxis,size='x-small',rotation=90)
     ax.set_xlabel('Game number',fontsize='large')
     ax.set_ylabel('Points won',fontsize='large')
     ax.set_title(f'After {results.Winner.to_list()[-1]} win',
                  fontsize='large')
+    ax.axvspan(1,32,facecolor='k',alpha=0.05)
+    ax.text(31.9,10,'Round 1',ha='right',rotation=90)
+    ax.text(47.9,10,'Round 2',ha='right',rotation=90)
+    ax.axvspan(48,56,facecolor='k',alpha=0.05)
+    ax.text(55.9,10,'Sweet 16',ha='right',rotation=90)
     plt.legend()
     plt.tight_layout()
 
