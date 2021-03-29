@@ -41,13 +41,25 @@ def get_rd3_points(results,seeds):
 
     rd3_const = 8
     
-    if results.size <= 48:
+    if results.size <= 56:
         rd3_pts = rd3_const+seeds.loc[results.Winner.values][48:]
 
     else:
         rd3_pts = rd3_const+seeds.loc[results.Winner.values][48:56]
 
     return rd3_pts
+
+def get_rd4_points(results,seeds):
+
+    rd4_const = 14
+    
+    if results.size <= 60:
+        rd4_pts = rd4_const+seeds.loc[results.Winner.values][56:]
+
+    else:
+        rd4_pts = rd4_const+seeds.loc[results.Winner.values][56:60]
+
+    return rd4_pts
 
 
 def main(rnd):
@@ -90,8 +102,10 @@ def main(rnd):
         all_points = all_points.append(get_rd3_points(results,seeds))
 
     if rnd >= 4:
+        colnames = ['Player']
+        colnames = colnames + list(range(56,60))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd4.csv',
-                                 **readcsv_opts).T)
+                                 names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd4_points(results,seeds))
 
     if rnd >= 5:
@@ -134,11 +148,17 @@ def main(rnd):
     ax.set_ylabel('Points won',fontsize='large')
     ax.set_title(f'After {results.Winner.to_list()[-1]} win',
                  fontsize='large')
+
     ax.axvspan(1,32,facecolor='k',alpha=0.05)
     ax.text(31.9,10,'Round 1',ha='right',rotation=90)
+
     ax.text(47.9,10,'Round 2',ha='right',rotation=90)
+
     ax.axvspan(48,56,facecolor='k',alpha=0.05)
     ax.text(55.9,10,'Sweet 16',ha='right',rotation=90)
+
+    ax.text(59.5,10,'Elite 8',ha='right',rotation=90)
+    
     plt.legend()
     plt.tight_layout()
 
