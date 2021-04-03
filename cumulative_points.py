@@ -61,6 +61,26 @@ def get_rd4_points(results,seeds):
 
     return rd4_pts
 
+def get_rd5_points(results,seeds):
+
+    rd5_const = 28
+    
+    if results.size <= 62:
+        rd5_pts = rd5_const+0*seeds.loc[results.Winner.values][60:]
+
+    else:
+        rd5_pts = rd5_const+0*seeds.loc[results.Winner.values][60:62]
+
+    return rd5_pts
+
+def get_rd6_points(results,seeds):
+
+    rd6_const = 40
+    rd6_pts = rd6_const+0*seeds.loc[results.Winner.values].iloc[-1]
+
+    return rd6_pts
+
+
 
 def main(rnd):
 
@@ -89,33 +109,36 @@ def main(rnd):
     #Here we do further rounds when necessary.
     if rnd >= 2:
         colnames = ['Player']
-        colnames = colnames + list(range(32,48))
+        colnames = colnames + list(range(1,17))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd2.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd2_points(results,seeds))
 
     if rnd >= 3:
         colnames = ['Player']
-        colnames = colnames + list(range(48,56))
+        colnames = colnames + list(range(1,9))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd3.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd3_points(results,seeds))
 
     if rnd >= 4:
         colnames = ['Player']
-        colnames = colnames + list(range(56,60))
+        colnames = colnames + list(range(1,5))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd4.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd4_points(results,seeds))
 
     if rnd >= 5:
+        colnames = ['Player']
+        colnames = colnames + list(range(1,3))
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd5.csv',
-                                 **readcsv_opts).T)
+                                 names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd5_points(results,seeds))
-
+        
     if rnd >= 6:
+        colnames = ['Player','1']
         players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd6.csv',
-                                 **readcsv_opts).T)
+                                 names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd6_points(results,seeds))
 
     players.reset_index(drop=True,inplace=True)
@@ -124,7 +147,7 @@ def main(rnd):
     #We now have all the data we need. 
     #Settng up plot.
     plt.style.use('fivethirtyeight')
-    fig,ax = plt.subplots(1,1,figsize=(12,7),num='cumulative')
+    fig,ax = plt.subplots(1,1,figsize=(14,7),num='cumulative')
     ax.set_prop_cycle(cycler(color=plt.get_cmap('tab20').colors))
     xaxis = np.arange(1,results.size+1,dtype=int)
 
@@ -157,8 +180,11 @@ def main(rnd):
     ax.axvspan(48,56,facecolor='k',alpha=0.05)
     ax.text(55.9,10,'Sweet 16',ha='right',rotation=90)
 
-    ax.text(59.5,10,'Elite 8',ha='right',rotation=90)
+    ax.text(59.9,10,'Elite 8',ha='right',rotation=90)
     
+    ax.axvspan(60,62,facecolor='k',alpha=0.05)
+    ax.text(61.9,10,'Final Four',ha='right',rotation=90)
+
     plt.legend()
     plt.tight_layout()
 
