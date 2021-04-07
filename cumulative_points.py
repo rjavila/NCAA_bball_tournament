@@ -185,6 +185,8 @@ def main(rnd):
     ax.axvspan(60,62,facecolor='k',alpha=0.05)
     ax.text(61.9,10,'Final Four',ha='right',rotation=90)
 
+    ax.text(63,10,'CHAMPIONSHIP',ha='right',rotation=90,color='green')
+
     plt.legend()
     plt.tight_layout()
 
