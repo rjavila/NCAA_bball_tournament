@@ -87,8 +87,8 @@ def main(rnd):
     #Reading in some static data to figure out points. 
     year = f'{datetime.now():%Y}'
 
-    seeds = pd.read_csv(f'data/{year}_seeds.csv',index_col='School')
-    results = pd.read_csv(f'data/{year}_results.txt')
+    seeds = pd.read_csv(f'data/{year}/{year}_seeds.csv',index_col='School')
+    results = pd.read_csv(f'data/{year}/{year}_results.txt')
 
     rnd1_pts = get_rd1_points(results,seeds)
    
@@ -102,7 +102,7 @@ def main(rnd):
                     'index_col':'Player',
                     'comment':'#'}
 
-    players = pd.read_csv(f'data/{year}_spreadsheet_rd1.csv',names=colnames,
+    players = pd.read_csv(f'data/{year}/{year}_spreadsheet_rd1.csv',names=colnames,
                           **readcsv_opts)
     players = players.T
 
@@ -190,7 +190,7 @@ def main(rnd):
     plt.legend()
     plt.tight_layout()
 
-    plt.savefig('2021_cumulative.png',dpi=300)
+    plt.savefig(f'{year}_cumulative.png',dpi=300)
 
     return players
 
