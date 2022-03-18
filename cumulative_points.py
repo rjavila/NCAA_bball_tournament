@@ -10,7 +10,7 @@ import numpy as np
 import sys
 from cycler import cycler
 from datetime import datetime
-
+import matplotlib.transforms as transforms
 
 def get_rd1_points(results,seeds):
 
@@ -143,13 +143,16 @@ def main(rnd):
 
     players.reset_index(drop=True,inplace=True)
     players = players.apply(lambda x: x.str.rstrip(' ][1234567890'))
-
+  
     #We now have all the data we need. 
     #Settng up plot.
-    plt.style.use('fivethirtyeight')
+    plt.close('all')
     fig,ax = plt.subplots(1,1,figsize=(14,7),num='cumulative')
+
+    plt.style.use('fivethirtyeight')
     ax.set_prop_cycle(cycler(color=plt.get_cmap('tab20').colors))
-    xaxis = np.arange(1,results.size+1,dtype=int)
+    xaxis = np.arange(1,all_points.size+1)
+    trans = transforms.blended_transform_factory(ax.transData, ax.transAxes)
 
     #This is where the work gets done, each player's data gets added
     #to the plot.
@@ -160,35 +163,40 @@ def main(rnd):
 
         ax.plot(xaxis,
                 points_won.cumsum(),
-                lw=3,
+                lw=2,
                 label=f'{player}: {points_won.sum()}')
 
-    
     #Finishing up plot.
     ax.set_xticks(xaxis)
     ax.set_xticklabels(xaxis,size='x-small',rotation=90)
     ax.set_xlabel('Game number',fontsize='large')
     ax.set_ylabel('Points won',fontsize='large')
+    ax.set_xlim(1,points_won.size+1)
     ax.set_title(f'After {results.Winner.to_list()[-1]} win',
                  fontsize='large')
 
     ax.axvspan(1,32,facecolor='k',alpha=0.05)
-    ax.text(31.9,10,'Round 1',ha='right',rotation=90)
+    ax.text(32,0.015,'Round 1',ha='right',rotation=90,
+            transform=trans)
 
-    ax.text(47.9,10,'Round 2',ha='right',rotation=90)
+    ax.text(48,0.015,'Round 2',ha='right',rotation=90,
+            transform=trans)
 
     ax.axvspan(48,56,facecolor='k',alpha=0.05)
-    ax.text(55.9,10,'Sweet 16',ha='right',rotation=90)
+    ax.text(56,0.015,'Sweet 16',ha='right',rotation=90,
+            transform=trans)
 
-    ax.text(59.9,10,'Elite 8',ha='right',rotation=90)
+    ax.text(60,0.015,'Elite 8',ha='right',rotation=90,
+            transform=trans)
     
     ax.axvspan(60,62,facecolor='k',alpha=0.05)
-    ax.text(61.9,10,'Final Four',ha='right',rotation=90)
+    ax.text(62,0.015,'Final Four',ha='right',rotation=90,
+            transform=trans)
 
-    ax.text(63,10,'CHAMPIONSHIP',ha='right',rotation=90,color='green')
+    ax.text(63,0.015,'CHAMPIONSHIP',ha='right',rotation=90,color='green',
+            transform=trans)
 
-    plt.legend()
-    plt.tight_layout()
+    plt.legend(ncol=2,fontsize='small')
 
     plt.savefig(f'{year}_cumulative.png',dpi=300)
 
