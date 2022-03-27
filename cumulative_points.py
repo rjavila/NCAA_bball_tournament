@@ -110,34 +110,34 @@ def main(rnd):
     if rnd >= 2:
         colnames = ['Player']
         colnames = colnames + list(range(1,17))
-        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd2.csv',
+        players = players.append(pd.read_csv(f'data/{year}/{year}_spreadsheet_rd2.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd2_points(results,seeds))
 
     if rnd >= 3:
         colnames = ['Player']
         colnames = colnames + list(range(1,9))
-        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd3.csv',
+        players = players.append(pd.read_csv(f'data/{year}/{year}_spreadsheet_rd3.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd3_points(results,seeds))
 
     if rnd >= 4:
         colnames = ['Player']
         colnames = colnames + list(range(1,5))
-        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd4.csv',
+        players = players.append(pd.read_csv(f'data/{year}/{year}_spreadsheet_rd4.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd4_points(results,seeds))
 
     if rnd >= 5:
         colnames = ['Player']
         colnames = colnames + list(range(1,3))
-        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd5.csv',
+        players = players.append(pd.read_csv(f'data/{year}/{year}_spreadsheet_rd5.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd5_points(results,seeds))
         
     if rnd >= 6:
         colnames = ['Player','1']
-        players = players.append(pd.read_csv(f'data/{year}_spreadsheet_rd6.csv',
+        players = players.append(pd.read_csv(f'data/{year}/{year}_spreadsheet_rd6.csv',
                                  names=colnames,**readcsv_opts).T)
         all_points = all_points.append(get_rd6_points(results,seeds))
 
@@ -146,10 +146,10 @@ def main(rnd):
   
     #We now have all the data we need. 
     #Settng up plot.
+    plt.style.use('fivethirtyeight')
     plt.close('all')
     fig,ax = plt.subplots(1,1,figsize=(14,7),num='cumulative')
 
-    plt.style.use('fivethirtyeight')
     ax.set_prop_cycle(cycler(color=plt.get_cmap('tab20').colors))
     xaxis = np.arange(1,all_points.size+1)
     trans = transforms.blended_transform_factory(ax.transData, ax.transAxes)
@@ -161,11 +161,19 @@ def main(rnd):
         goodidx = players[player][:results.size].to_list()==results.Winner
         points_won = all_points.Seed.where(goodidx.to_list(),other=0) 
 
-        ax.plot(xaxis,
-                points_won.cumsum(),
-                lw=2,
-                label=f'{player}: {points_won.sum()}')
+        if player == 'Chalk':
+            ax.plot(xaxis,
+                    points_won.cumsum(),
+                    c='k',lw=2,
+                    label=f'{player}: {points_won.sum()}')
+        
+        else:
+            ax.plot(xaxis,
+                    points_won.cumsum(),
+                    lw=2,
+                    label=f'{player}: {points_won.sum()}')
 
+        
     #Finishing up plot.
     ax.set_xticks(xaxis)
     ax.set_xticklabels(xaxis,size='x-small',rotation=90)
