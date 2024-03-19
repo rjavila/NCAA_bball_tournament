@@ -39,10 +39,11 @@ def read_madness(xlfilename):
 
             case 'Championship':
 
-                colnames = ['64']
+                colnames = ['63']
 
         rd = pd.DataFrame(xl[round].values,index=list(xl[round].index),
                           columns=colnames)
+        print(rd.columns)
         pickstab = pickstab.join(rd)
 
     return pickstab
