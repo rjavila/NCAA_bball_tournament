@@ -59,3 +59,6 @@ Villanova
 Duke
 Kansas
 North Carolina
+Kansas
+North Carolina
+Kansas
