@@ -69,7 +69,11 @@ def make_plot(pointstab,latest_winner,games_played,year):
 
     #ax.set_prop_cycle(cycler(color=plt.get_cmap('tab20').colors))
     colorstuple = plt.get_cmap('tab20').colors
+    if pointstab.shape[0] > len(colorstuple): 
+        colorstuple += colorstuple 
+
     colordict = {}
+
     for i,player in enumerate(pointstab.index):
 
         colordict[player] = colorstuple[i]
@@ -130,7 +134,7 @@ def make_plot(pointstab,latest_winner,games_played,year):
 
     plt.legend(ncol=2,fontsize='small')
 
-    #plt.savefig(f'{year}_cumulative.png',dpi=300)
+    plt.savefig(f'{year}_cumulative.png',dpi=300)
     
 def formula3(winners_seeds):
     
