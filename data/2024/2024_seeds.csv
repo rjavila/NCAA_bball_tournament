@@ -16,7 +16,7 @@ Seed,School
 15,South Dakota St.
 16,Stetson
 1,North Carolina
-2,Arizona	
+2,Arizona
 3,Baylor
 4,Alabama
 5,Saint Mary's
@@ -30,7 +30,7 @@ Seed,School
 13,Charleston
 14,Colgate	
 15,Long Beach St.
-16,Howard/Wagner
+16,Wagner
 1,Houston	
 2,Marquette	
 3,Kentucky
@@ -40,8 +40,8 @@ Seed,School
 7,Florida	
 8,Nebraska
 9,Texas A&M
-10,Colorado/Boise St.
-11,NC St.
+10,Colorado
+11,NC State
 12,James Madison	
 13,Vermont	
 14,Oakland
@@ -56,10 +56,10 @@ Seed,School
 7,Texas
 8,Utah St.
 9,TCU
-10,Virginia/Colorado St.
+10,Colorado St.
 11,Oregon
 12,McNeese
 13,Samford
 14,Akron	
 15,Saint Peter's	
-16,Montana St./Grambling St.
+16,Grambling St.

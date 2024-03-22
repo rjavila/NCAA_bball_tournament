@@ -1,3 +1,7 @@
+# 2024 changes
+
+The code `read_picks.py` is now used to read in the excel spreadsheets. 
+
 # Introduction
 
 This directory contains two scripts that can be used to produce a table of
