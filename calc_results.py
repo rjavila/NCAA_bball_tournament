@@ -6,12 +6,12 @@ predictions table (from `read_picks`), results table, and seeds table.
 import sys
 import argparse
 from datetime import datetime 
+from itertools import product
 
 # Dependencies
 import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
-from cycler import cycler
 from matplotlib import transforms
 
 # Local
@@ -67,13 +67,15 @@ def make_plot(pointstab,latest_winner,games_played,year):
 
     fig,ax = plt.subplots(1,1,figsize=(14,7),num='cumulative')
 
-    #ax.set_prop_cycle(cycler(color=plt.get_cmap('tab20').colors))
     colorstuple = plt.get_cmap('tab20').colors
-    if pointstab.shape[0] > len(colorstuple): 
-        colorstuple += colorstuple 
+    colorstuple += colorstuple
+    #lslist = ['-','--']
+
+    #linelist = []
+    #for i in product(colorstuple,lslist):
+    #    linelist.append(i)
 
     colordict = {}
-
     for i,player in enumerate(pointstab.index):
 
         colordict[player] = colorstuple[i]
@@ -97,7 +99,8 @@ def make_plot(pointstab,latest_winner,games_played,year):
             case other:
 
                 ax.plot(xaxis,pointstab.loc[player].cumsum(),
-                        lw=2,c=colordict[player],
+                        c=colordict[player],
+                        lw=2,
                         label=f'{player}: {int(pointstab.loc[player].sum())}'
                         )
 
