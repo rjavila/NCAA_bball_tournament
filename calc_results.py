@@ -17,7 +17,7 @@ from matplotlib import transforms
 # Local
 from read_picks import read_madness
 
-def main(year):
+def main(formula,year):
 
     #Reading in some static data to figure out points.
     pickstab = read_madness(f'data/{year}/{year} MarsMadness picks list.xlsx')
@@ -33,13 +33,13 @@ def main(year):
     seeds_list = [seeds.loc[school].values[0] for school in results['Winner']]
     winners_seeds[:(games_played := len(seeds_list))] = seeds_list
 
-    match int(year):
+    match formula:
 
-        case 2019 | 2020 | 2021:
+        case 2:
 
-            pass 
+            awarded_points = formula2(winners_seeds)
 
-        case 2024:
+        case 3:
 
             awarded_points = formula3(winners_seeds)
 
@@ -56,7 +56,7 @@ def main(year):
         
     return pointstab,results.values[-1][0],games_played
     
-def make_plot(pointstab,latest_winner,games_played,year):
+def make_plot(pointstab,latest_winner,games_played,year,formula):
     '''
     Function to generate cumulative points plot.
     '''
@@ -137,10 +137,63 @@ def make_plot(pointstab,latest_winner,games_played,year):
 
     plt.legend(ncol=2,fontsize='small')
 
-    plt.savefig(f'{year}_cumulative.png',dpi=300)
+    plt.savefig(f'{year}_formula{formula}.png',dpi=300)
     
+def formula2(winners_seeds):
+    '''
+    Formula 2 
+    =========
+
+    Rd1:            3 x seed
+    Rd2:            2 x seed 
+    Sweet 16:       8 + seed
+    Elite 8:       14 + seed
+    Final Four:           28
+    Championship:         40
+    ''' 
+    awarded_points = np.full(63,np.nan)
+
+    for i,winner_seed in enumerate(winners_seeds):
+
+        if i < 32: # Round 1 : 3 X seed
+
+            awarded_points[i] = winner_seed * 3 
+
+        elif (i>=32) & (i<48) & (winner_seed!=0): # Round 2: 2 X seed
+            
+            awarded_points[i] = winner_seed * 2
+
+        elif (i>=48) & (i<56) & (winner_seed!=0): # Sweet 16: seed + 8
+            
+            awarded_points[i] = winner_seed + 8
+
+        elif (i>=56) & (i<60) & (winner_seed!=0): # Elite 8: seed + 14
+
+            awarded_points[i] = winner_seed + 14
+
+        elif (i>=60) & (i<62) & (winner_seed!=0): # Final Four: 28
+
+            awarded_points[i] = 28
+
+        elif (i==62) & (winner_seed!=0): # Championship: 40
+
+            awarded_points[i] = 40
+
+    return awarded_points
+
 def formula3(winners_seeds):
-    
+    '''
+    Formula 3 
+    =========
+
+    Rd1:            3 x seed
+    Rd2:            3 x seed 
+    Sweet 16:      16 + seed
+    Elite 8:       32 + seed
+    Final Four:           48
+    Championship:         64
+    '''
+
     awarded_points = np.full(63,np.nan)
 
     for i,winner_seed in enumerate(winners_seeds):
@@ -165,17 +218,12 @@ def formula3(winners_seeds):
 
             awarded_points[i] = 64
 
-
     return awarded_points
-
-
-
-
-
 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
+    parser.add_argument('--formula',type=int,help='Formula to use.')
     parser.add_argument('--year',type=str,default='',
                         help='Year you wish to process. If empty will\
                         default to current year.')
@@ -186,11 +234,11 @@ if __name__ == "__main__":
     if args.year == '':
 
         year = f'{datetime.now():%Y}'
-
+    
     print(f'Processing {year}')
-    pointstab,latest_winner,games_played = main(year)
+    pointstab,latest_winner,games_played = main(args.formula,year)
 
     if args.plot:
 
-        make_plot(pointstab,latest_winner,games_played,year)
+        make_plot(pointstab,latest_winner,games_played,year,args.formula)
     
