@@ -1,8 +1,3 @@
-# 2024 changes
-
-The code `read_picks.py` is now used to read in the excel spreadsheets. 
-Use `calc_results.py` to compute points and make plots. There are options in there to use different formulae.
-
 # Introduction
 
 This directory contains two scripts and a data directory that are used to 
