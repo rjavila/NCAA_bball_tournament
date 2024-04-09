@@ -5,35 +5,38 @@ Use `calc_results.py` to compute points and make plots. There are options in the
 
 # Introduction
 
-This directory contains two scripts that can be used to produce a table of
-predictions by players in the NCAA bracket game.  
+This directory contains two scripts and a data directory that are used to 
+calculate the cumulative points for MarsMadness bracket players. 
 
 ## Requirements
 
-*user_urls.txt*:  This file contains a table (formatted as *ascii.basic*) 
-that contains the name of the player and the URL where that player's bracket 
-can be found. 
+Python >= 3.10. You will also need 3 files in the data directory (YYYY corresponds
+to the year in question):
+
+YYYY MarsMadness picks list.xlsx
+: Excel file containing a table of picks for every player for every game. The spreadsheet should contain one sheet per round, in addition to the table having a specific format. Look at one of the old files to figure out what this file should look like. 
+
+YYYY_seeds.csv
+: Simple text file containing a list of schools and their seed. (Seed,School)
+
+YYYY_results.csv
+: Text file containing a list of the winner of each game. The order of the games must match the order used in the excel spreadsheet. 
+
 
 # Execution
 
-The two scripts should be run from an ipython session. 
+All you need to run is the `calc_results.py` script. It has several command line
+options, listed below.  
 
-The first script, `scrape_website.py` will prompt you for a username and
-password for the CBS Sports website (https://www.cbssports.com). Once logged in,
-the code will download the raw html for each of the URLs in the *user_urls.txt* 
-table.
+```
+❯ python calc_results.py -h
+usage: calc_results.py [-h] [--formula FORMULA] [--year YEAR] [--plot]
 
-*Change the round_id and games variables at the top of daily_picks.py*
-The second script will search for the html files that the previous script 
-downloaded and then process the information into a more useful format. It 
-returns a pandas dataframe called *results*. Use this dataframe to create and 
-write out the desired tables in whatever format you like.
+options:
+  -h, --help         show this help message and exit
+  --formula FORMULA  Formula to use.
+  --year YEAR        Year you wish to process. If empty will default to
+                     current year.
+  --plot             Make plot
+```
 
-# TODO
-
-1. Consolidate code if possible.
-2. Remove hard coded rounds/number of games from `daily_picks.py`.
-3. Tell user what website they're logging into.
-4. Check that login was successful (don't know how to do this yet).
-5. Find a better way to extract the JSON file in *daily_picks.py*. 
-6. Basically, turn the second script into a class.
