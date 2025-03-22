@@ -35,7 +35,9 @@ options:
   --plot             Make plot
 ```
 
-# Past Champions
+# Champions
+
+## List of yearly top 3 
 
 | Year | 🏅 | 🥈 | 🥉 |
 | ---- | -- | -- | -- |
@@ -46,7 +48,27 @@ options:
 | 2021 | Conner | Tyler | J. Ro |
 | 2020 | 🦠 | 🦠 | 🦠 |
 | 2019 | J. Ro | Nate | Elaine |
-| 2018 | Conner | J. Ro | Jeames |
+| 2018 | Conner | J. Ro | James |
 | 2017 | Elaine | James | Barack |
 | 2016 | Roberto | Jo | J. Ro |
 | 2015 | Miranda | Ariel | Roberto |
+
+## Most successful players 
+
+| Player | 🏅 | 🥈 | 🥉 |
+| ---- | -- | -- | -- |
+| J. Ro    | 2 (2019, 2024) | 1 (2018)       | 2 (2016, 2021)       |
+| Conner   | 2 (2018, 2021) | 1 (2024)       |                      |
+| 🦠       | 1 (2020)       | 1 (2020)       | 1 (2020)             |
+| Elaine   | 1 (2017)       |                | 1 (2019, 2022)       |
+| Roberto  | 1 (2016)       |                | 1 (2015)             |
+| Kevin    | 1 (2023)       |                |                      |
+| Cara     | 1 (2022)       |                |                      |
+| Miranda  | 1 (2015)       |                |                      |
+| Nate     |                | 2 (2019, 2023) |                      |
+| James    |                | 1 (2021)       | 3 (2018, 2023, 2024) |
+| Deep     |                | 1 (2022)       |                      |
+| Tyler    |                | 1 (2021)       |                      |
+| Jo       |                | 1 (2016)       |                      |
+| Ariel    |                | 1 (2015)       |                      |
+| Barack   |                |                | 1 (2017)             |
