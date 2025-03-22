@@ -35,3 +35,18 @@ options:
   --plot             Make plot
 ```
 
+# Past Champions
+
+| Year | 🏅 | 🥈 | 🥉 |
+| ---- | -- | -- | -- |
+| 2025 | 🏀 | 🏀 | 🏀 |
+| 2024 | J. Ro | Conner | James |
+| 2023 | Kevin | Nate | James |
+| 2022 | Cara | Deep | Elaine |
+| 2021 | Conner | Tyler | J. Ro |
+| 2020 | 🦠 | 🦠 | 🦠 |
+| 2019 | J. Ro | Nate | Elaine |
+| 2018 | Conner | J. Ro | Jeames |
+| 2017 | Elaine | James | Barack |
+| 2016 | Roberto | Jo | J. Ro |
+| 2015 | Miranda | Ariel | Roberto |
