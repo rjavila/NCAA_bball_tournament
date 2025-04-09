@@ -12,6 +12,7 @@ from itertools import product
 import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
+import matplotlib.font_manager as font_manager
 from matplotlib import transforms
 
 # Local
@@ -63,6 +64,9 @@ def make_plot(pointstab,latest_winner,games_played,year,formula):
 
     # Setting up plot
     plt.style.use('fivethirtyeight')
+    font = font_manager.FontProperties(family='Menlo',
+                                       style='normal',
+                                       size=12)
     plt.close('all')
 
     fig,ax = plt.subplots(1,1,figsize=(14,7),num='cumulative')
@@ -93,7 +97,7 @@ def make_plot(pointstab,latest_winner,games_played,year,formula):
 
                 ax.plot(xaxis,pointstab.loc[player].cumsum(),
                         c='k',lw=2,
-                        label=f'{player}: {int(pointstab.loc[player].sum())}'
+                        label=f'{player:<10}{int(pointstab.loc[player].sum()):>5}'
                         )
 
             case other:
@@ -101,7 +105,7 @@ def make_plot(pointstab,latest_winner,games_played,year,formula):
                 ax.plot(xaxis,pointstab.loc[player].cumsum(),
                         c=colordict[player],
                         lw=2,
-                        label=f'{player}: {int(pointstab.loc[player].sum())}'
+                        label=f'{player:<10}{int(pointstab.loc[player].sum()):>5}'
                         )
 
     # Finishing up plot.
@@ -135,7 +139,7 @@ def make_plot(pointstab,latest_winner,games_played,year,formula):
     ax.text(63,0.015,'CHAMPIONSHIP',ha='right',rotation=90,color='green',
             transform=trans)
 
-    plt.legend(ncol=2,fontsize='small')
+    plt.legend(ncol=2, prop=font)
 
     plt.savefig(f'{year}_formula{formula}.png',dpi=300)
     
